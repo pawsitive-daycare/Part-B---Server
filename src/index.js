@@ -1,13 +1,19 @@
+const dotenv = require('dotenv');
+
+dotenv.config();
+
+const {app} = require('./server.js');
+const { dbConnect } = require('./utils/dabase.js');
 
 
-import app from "./server";
+
 
 const PORT = process.env.PORT || 8080;
 
 
 
 
-app.listen(PORT, async() => {
+app.listen(PORT, async () => {
 
     await dbConnect();
 
