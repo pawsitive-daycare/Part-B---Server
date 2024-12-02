@@ -1,6 +1,5 @@
-const dotenv = require('dotenv');
 
-dotenv.config();
+require ('dotenv').config();
 
 const {app} = require('./server.js');
 const { dbConnect } = require('./utils/dabase.js');
