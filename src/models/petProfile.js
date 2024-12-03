@@ -20,9 +20,15 @@ const petProfileSchema = new mongoose.Schema({
     age: {
         type: Number,
         required: true
+    },
+    gender: {
+        type: String,
+        required: true
     }
 });
+
 const PetProfile = mongoose.model('PetProfile', petProfileSchema);
+
 module.exports = {
     PetProfile
 }
