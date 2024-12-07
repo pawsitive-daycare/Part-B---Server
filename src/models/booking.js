@@ -5,6 +5,10 @@ const bookingSchema = new mongoose.Schema({
         type: mongoose.ObjectId,
         ref: 'User'
     },
+    pet: {
+        type: mongoose.ObjectId,
+        ref:'PetProfile'
+    },
     date: {
         type: Date,
         required: true
@@ -13,6 +17,15 @@ const bookingSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    service: {}
+    service: {
+        type: String,
+        required: true
+    }
     
-})
+});
+
+const bookingModel = mongoose.model('Booking', bookingSchema);
+
+module.exports = {
+    bookingModel
+}
