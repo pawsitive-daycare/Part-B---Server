@@ -24,6 +24,10 @@ const petProfileSchema = new mongoose.Schema({
     gender: {
         type: String,
         required: true
+    },
+    notes: {
+        type: String,
+        required: true
     }
 });
 
