@@ -2,7 +2,6 @@
 const mongoose = require("mongoose");
 
 // Create a Mongoose schema to define the structure of a model
-
 const userSchema = new mongoose.Schema({
     email: {
         type: String,
