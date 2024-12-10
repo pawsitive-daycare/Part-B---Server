@@ -1,29 +1,30 @@
-const express = require ("express")
-const router = express.Router()
-const userController = require("../controller/userController")
+
+const {getAllUsers, getUser, registerUser, loginUser, updateUser, deleteUser} = require("../controller/userController");
+
+const express = require ("express");
+const router = express.Router();
+
 
 // Get all users
-router.get("/", userController.getAllUsers);
+router.get("/", getAllUsers);
 
 // Get a user by ID
 
-router.get("/:id", userController.getUser);
+router.get("/:id", getUser);
 
 // Register user
-router.post("/signup", userController.registerUser);
+router.post("/signup", registerUser);
 
 // Login user
 
-router.post("/login", userController.loginUser);
+router.post("/login", loginUser);
 
 // Update user
 
-router.put("/:id", userController.updateUser);
+router.put("/:id", updateUser);
 
 // Delete user
 
-router.delete("/:id", userController.deleteUser);
+router.delete("/:id", deleteUser);
 
-module.exports = {
-    router
-}
+module.exports = router;
