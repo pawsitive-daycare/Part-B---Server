@@ -1,5 +1,6 @@
 
 const userRoutes = require("../src/routes/user_routes");
+const petRoutes = require("../src/routes/petProfile_routes");
 const express = require("express");
 const app = express();
 
@@ -14,6 +15,7 @@ app.get("/",(request, response) => {
 
 app.use("/users", userRoutes);
 
-module.exports = {
-    app
-}
+app.use("/pets", petRoutes);
+
+
+module.exports = {app};
