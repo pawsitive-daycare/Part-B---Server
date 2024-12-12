@@ -24,7 +24,7 @@ app.get("/",(request, response) => {
 
 app.use("/users", userRoutes);
 
-app.use("/pets", petRoutes);
+
 
 
 module.exports = {app};
