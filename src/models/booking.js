@@ -6,11 +6,28 @@ const bookingSchema = new mongoose.Schema({
         ref: 'User'
     },
     pet: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref:'PetProfile'
+        animal: {
+            type: String,
+            required: true
+        },
+        name: {
+            type: String,
+            required: true
+        },
+        gender: {
+            type: String,
+            required: true
+        },
+        breed: {
+            type: String
+        },
+        age: {
+            type: Number
+        }
     },
     date: {
         type: Date,
+        default: Date.now,
         required: true
     },
     time: {

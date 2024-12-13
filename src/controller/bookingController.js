@@ -1,7 +1,5 @@
 
-const express = require("express")
 const { userModel } = require("../models/user")
-const { PetProfile } = require("../models/petProfile")
 const { bookingModel } = require("../models/booking")
 
 // all bookings
@@ -16,7 +14,8 @@ const getAllbookings = async (req, res) => {
 // get a booking by user id
 const getBooking = async (req,res) => {
   try{
-    const bookings = await bookingModel.find({ user : req.param._id});
+    _id = req.param._id
+    const bookings = await bookingModel.find(_id);
     if(!bookings) {
       return res.status(400).json({ message: "booking not found"});
     }
@@ -32,7 +31,6 @@ try {
     console.log("New booking coming in")
     const { user, service, date, pet } = req.body
     const userObject = await userModel.findOne({ _id: user })
-    const petObject = await PetProfile.findOne({ _id: pet})
     const newBooking = { 
       user: userObject, 
       service: {
@@ -42,13 +40,19 @@ try {
       date: {
         date: date.date
       }, 
-      pet: petObject
+      pet: {
+        animal: pet.animal,
+        name: pet.name,
+        gender: pet.gender,
+        breed: pet.breed,
+        age: pet.age
+      }
     }
       const savedBooking = await bookingModel.create(newBooking)
       console.log("New booking created : " + savedBooking)
     res.status(201).send(savedBooking)
-    } catch (err) {
-      res.status(500).send({ error: err.message })
+    } catch (error) {
+      res.status(500).send({ error: error.message })
     }
   }
 
@@ -61,7 +65,6 @@ const updateBooking = async (req, res) => {
       return res.status(400).json({ message: "Booking not found" });
     }
     const userObject = await userModel.findOne({ _id: user })
-    const petObject = await PetProfile.findOne({ _id: pet})
 
     bookingToUpdate.user = userObject;
     bookingToUpdate.service = {
@@ -81,3 +84,11 @@ const updateBooking = async (req, res) => {
 }
 
 // delete a booking
+
+
+module.exports = {
+  getAllbookings,
+  getBooking,
+  makeBooking,
+  updateBooking
+}

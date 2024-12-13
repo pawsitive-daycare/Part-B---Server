@@ -1,6 +1,4 @@
-
-const userRoutes = require("../src/routes/user_routes");
-const petRoutes = require("../src/routes/petProfile_routes");
+// This file is the entry point for the server. It sets up the server and routes.
 const express = require("express");
 const cors = require("cors");
 const app = express();
@@ -22,9 +20,16 @@ app.get("/",(request, response) => {
 })
 
 
+
+// Importing the user routes
+const userRoutes = require("../src/routes/user_routes");
 app.use("/users", userRoutes);
 
 
+const bookingRoutes = require("../src/routes/booking_routes")
+app.use("/mybookings", bookingRoutes);
 
 
-module.exports = {app};
+module.exports = {
+  app
+};

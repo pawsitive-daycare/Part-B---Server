@@ -16,5 +16,5 @@ app.listen(PORT, async () => {
 
     await dbConnect();
     
-    console.log("server is running " + PORT)
+    console.log(`App is running, click here ---> http://localhost:${PORT}/`)
 });
