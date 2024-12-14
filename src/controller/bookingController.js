@@ -14,7 +14,7 @@ const getAllbookings = async (req, res) => {
 const getBooking = async (req, res) => {
   try {
     _id = req.param._id;
-    const bookings = await bookingModel.find({ user: userId });
+    const bookings = await bookingModel.find({ user: _id });
     if (!bookings) {
       return res.status(400).json({ message: "booking not found" });
     }
@@ -51,15 +51,11 @@ const makeBooking = async (req, res) => {
     };
     const savedBooking = await bookingModel.create(newBooking);
 
-    const populatedBooking = await bookingModel
-      .findById(savedBooking._id)
-      .populate("user");
+    const populatedBooking = await bookingModel.findById(savedBooking._id).populate("user");
     res.status(201).json(populatedBooking);
   } catch (error) {
     console.error(error);
-    res
-      .status(500)
-      .json({ message: "Failed to create booking. Please try again later." });
+    res.status(500).json({ message: "Failed to create booking. Please try again later." });
   }
 };
 
