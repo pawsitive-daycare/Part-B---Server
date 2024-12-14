@@ -3,7 +3,35 @@ const mongoose = require("mongoose");
 const bookingSchema = new mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'User',
+    },
+    service: {
+        name: {
+            type: String,
+            required: true
+        },
+        price: {
+            type: Number,
+            required: true
+        }
+    },
+    date: {
+        year: {
+            type: Number,
+            required: true
+        },
+        month: {
+            type: Number,
+            required: true
+        },
+        day: {
+            type: Number,
+            required: true
+        },
+        time: {
+            type: String,
+            required: true
+        }
     },
     pet: {
         animal: {
@@ -14,35 +42,15 @@ const bookingSchema = new mongoose.Schema({
             type: String,
             required: true
         },
-        gender: {
+        breed: {
             type: String,
             required: true
         },
-        breed: {
-            type: String
-        },
         age: {
-            type: Number
+            type: Number,
+            required: true
         }
-    },
-    date: {
-        type: Date,
-        default: Date.now,
-        required: true
-    },
-    time: {
-        type: String,
-        required: true
-    },
-    service: {
-        name: { type: String,
-            required: true
-        },
-        price: {type : String,
-            required: true
-        },
     }
-    
 });
 
 const bookingModel = mongoose.model('Booking', bookingSchema);
