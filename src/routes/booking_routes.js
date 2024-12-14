@@ -1,5 +1,5 @@
 const express = require('express');
-const { getAllbookings, getBooking, makeBooking} = require('../controller/bookingController');
+const { getAllbookings, getBooking, makeBooking, deleteBooking, updateBooking} = require('../controller/bookingController');
 const { auth } = require('../middleware/auth');
 const router = express.Router();
 
@@ -10,10 +10,9 @@ router.get("/:id", auth, getBooking);
 
 router.post("/", auth,  makeBooking);
 
-// router.put("/:id", updateBooking);
+router.put("/:id", updateBooking);
 
-
-
+router.delete("/:id", auth, deleteBooking);
 
 
 

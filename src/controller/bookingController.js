@@ -12,13 +12,14 @@ const getAllbookings = async (req, res) => {
 };
 // get a booking by user id
 const getBooking = async (req, res) => {
+  console.log("Access to find users bookings by user_id : " );
   try {
-    _id = req.param._id;
-    const bookings = await bookingModel.find({ user: _id });
-    if (!bookings) {
+    const _id = req.param.id
+    const booking = await bookingModel.find({user: _id});
+    if (!booking) {
       return res.status(400).json({ message: "booking not found" });
     }
-    res.status(200).json(bookings);
+    res.status(200).json(booking);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -60,36 +61,42 @@ const makeBooking = async (req, res) => {
 };
 
 // update a booking
-// const updateBooking = async (req, res) => {
-//   const { user, service, date, pet } = req.body;
-//   try{
-//     const bookingToUpdate = await bookingModel.findById(req.params.id);
-//     if (!bookingToUpdate) {
-//       return res.status(400).json({ message: "Booking not found" });
-//     }
-//     const userObject = await userModel.findOne({ _id: user })
 
-//     bookingToUpdate.user = userObject;
-//     bookingToUpdate.service = {
-//       name: service.name,
-//       price: service.price
-//     };
-//     bookingToUpdate.date = {
-//       date: date.date
-//     }
-//     bookingToUpdate.pet = pe;
+const updateBooking = async (req, res) => {
+  const { user, service, date, pet} = req.body;
+  const updatedBooking = {user, service, date, pet}
+  try {
+    const booking = await bookingModel.findByIdAndUpdate(req.params.id, updatedBooking)
+    if (booking) {
+      res.send(booking)
+    } else {
+      res.status(404).send({error: "booking not found"})
+    } 
+  } catch (error) {
+      res.status(500).send({ error: error.message })
+  }
 
-//     await bookingToUpdate.save();
-//     res.status(200).json({message: "booking updated successfully"});
-//   } catch (error) {
-//     res.status(400).json({ message: error.message });
-//   }
-// }
+}
 
 // delete a booking
+
+const deleteBooking = async (req, res) => {
+  try {
+    const booking = await bookingModel.findByIdAndDelete(req.params.id)
+    console.log("Booking deleted")
+    res.status(200).send({ msg: "Booking is deleted successfully."})
+    return ;
+  }
+  catch (error) {
+    res.status(500).send({ error: error.message })
+  }
+};
+
 
 module.exports = {
   getAllbookings,
   getBooking,
   makeBooking,
+  updateBooking,
+  deleteBooking
 };
