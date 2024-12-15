@@ -4,13 +4,7 @@ const cors = require("cors");
 const app = express();
 
 
-app.use(
-    cors({
-      origin: ["http://localhost:8080", "https://pawsitivedaycare-app-85af86a9e0d4.herokuapp.com/", "https://zippy-tartufo-996534.netlify.app/"],
-      methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-      credentials: true, // Allow sending cookies across origins
-    })
-  );
+app.use(cors());
   
 app.use(express.json());
 
