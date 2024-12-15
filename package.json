@@ -4,7 +4,7 @@
   "description": "PAWsitive Daycare server side",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "dev": "nodemon src/index.js",
     "start": "node src/index.js",
     "seed": "node src/seed.js"
@@ -21,6 +21,7 @@
     "mongoose": "^8.8.3"
   },
   "devDependencies": {
+    "jest": "^29.7.0",
     "nodemon": "^3.1.7"
   }
 }

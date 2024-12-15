@@ -24,6 +24,19 @@ const getBooking = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+// const getBooking = async (req, res) => {
+//   try {
+//     const booking = await bookingModel.findById(req.params.id);
+//     if (booking) {
+//       res.status(200).send(booking)
+//     } else {
+//       res.status(404).send({error: "booking not found"})
+//     }
+//   } catch (error) {
+//     res.status(500).send({ error: error.message })
+//   }
+// }
 // create a booking
 const makeBooking = async (req, res) => {
   try {
@@ -80,15 +93,41 @@ const updateBooking = async (req, res) => {
 
 // delete a booking
 
+// const deleteBooking = async (req, res) => {
+//   try {
+//     const booking = await bookingModel.findByIdAndDelete(req.params.id)
+//     console.log("Booking deleted")
+//     res.status(200).send({ msg: "Booking is deleted successfully."})
+//     return ;
+//   }
+//   catch (error) {
+//     res.status(500).send({ error: error.message })
+//   }
+// };
 const deleteBooking = async (req, res) => {
   try {
-    const booking = await bookingModel.findByIdAndDelete(req.params.id)
-    console.log("Booking deleted")
-    res.status(200).send({ msg: "Booking is deleted successfully."})
-    return ;
-  }
-  catch (error) {
-    res.status(500).send({ error: error.message })
+    const userId = req.user._id; // Get the user ID from the authenticated user
+    const bookingId = req.params.id;
+
+    // Find the booking by ID
+    const booking = await bookingModel.findById(bookingId);
+
+    // Check if the booking exists
+    if (!booking) {
+      return res.status(404).json({ message: "Booking not found" });
+    }
+
+    // Check if the user is the creator of the booking
+    if (booking.user.toString() !== userId.toString()) {
+      return res.status(403).json({ message: "You are not authorized to delete this booking" });
+    }
+
+    // Delete the booking
+    await bookingModel.findByIdAndDelete(bookingId);
+    console.log("Booking deleted");
+    res.status(200).json({ message: "Booking is deleted successfully." });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 };
 

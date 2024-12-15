@@ -6,7 +6,7 @@ const router = express.Router();
 //
 router.get("/", auth, getAllbookings);
 
-router.get("/:id", auth, getBooking);
+router.get("/:id", auth ,getBooking);
 
 router.post("/", auth,  makeBooking);
 

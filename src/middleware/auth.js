@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const { userModel } = require('../models/user');
 
 require('dotenv').config();
 
@@ -10,8 +11,9 @@ const auth = async (req, res, next) => {
         const clientToken = req.headers.authorization.split(' ')[1];
         const decoded = jwt.verify(clientToken, SECRET_KEY);
         if (decoded) {
-            res.decoded = decoded
-            // req.user = await User.findById(decoded.id).select('-password');
+            // res.decoded = decoded
+            const user = await userModel.findById(decoded.id).select('-password');
+            req.user = user;
             next();
         } else {
             res.status(401).json({error: 'login failed, please authenticate'});
