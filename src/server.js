@@ -20,6 +20,7 @@ const corsOptions = {
 
 app.use(cors(corsOptions)); // Apply CORS middleware
 
+app.options('*', cors(corsOptions)); // Enable pre-flight request for all routes
 
 app.use(express.json());
 
