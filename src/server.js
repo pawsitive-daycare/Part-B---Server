@@ -4,8 +4,22 @@ const cors = require("cors");
 const app = express();
 
 
-app.use(cors());
-  
+const allowedOrigins = ['https://zippy-tartufo-996534.netlify.app'];
+
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
+    credentials: true, // Allow credentials (cookies, auth headers)
+  })
+);
+
+
 app.use(express.json());
 
 app.get("/",(request, response) => {
