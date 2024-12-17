@@ -32,32 +32,47 @@ const getUser = async (req, res) => {
 };
 
 // Create or register new user
-const registerUser =   async (req, res) => {
-    const { email, firstName, lastName, phoneNumber, password } = req.body;
-  
-     try {
-        //Checks for existing user
-       const userExists = await userModel.findOne({ email });
-       if (userExists) {
-         return res.status(400).json({ message: "User already exists" });
-       }
-       const hashedPassword = await bcrypt.hash(password, 12);
-  
-       const newUser = new userModel({
-         email,
-         firstName,
-         lastName,
-         phoneNumber,
-         password: hashedPassword,
-       });
-       await newUser.save();
-       res.status(201).json(newUser);
-     } catch (error) {
-       res.status(400).json({ message: error.message });
-     }
-   };
+const registerUser = async (req, res) => {
+  const { email, firstName, lastName, phoneNumber, password } = req.body;
 
-// 
+  try {
+    //Checks for existing user
+    const userExists = await userModel.findOne({ email });
+    if (userExists) {
+      return res.status(400).json({ message: "User already exists" });
+    }
+    const hashedPassword = await bcrypt.hash(password, 12);
+
+    const newUser = new userModel({
+      email,
+      firstName,
+      lastName,
+      phoneNumber,
+      password: hashedPassword,
+    });
+    await newUser.save();
+    res.status(201).json(newUser);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+// Login user
+const loginUser = async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    const user = await userModel.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    const token = jwt.sign({ userId: user._id }, process.env.SECRET_KEY, {
+      expiresIn: "1h",
+    });
+    res.status(200).json({ message: "Login successful", userId: user._id ,token });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 
 // Update user
 const updateUser = async (req, res) => {
@@ -94,29 +109,6 @@ const updateUser = async (req, res) => {
   }
 };
 
-
-// Login user
-const loginUser = async (req, res) => {
-  const { email, password } = req.body;
-  try {
-    const user = await userModel.findOne({email});
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
-    // const isPasswordValid = await bcrypt.compare(password, user.password);
-    // if (!isPasswordValid) {
-    //   return res.status(401).json({ message: "Invalid credentials" });
-    // }
-
-    const token = jwt.sign( {userId: user._id}, process.env.SECRET_KEY, {expiresIn: "1h"});
-    res.status(200).json({ message: "Login successful", token });
-
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
-
-
 // Delete user
 const deleteUser = async (req, res) => {
   try {
@@ -140,14 +132,11 @@ module.exports = {
   deleteUser,
 };
 
-
-
 // const isPasswordValid = await bcrypt.compare(password, user.password);
 // if (!isPasswordValid) {
 //   return res.status(401).json({ message: "Invalid credentials" });
 // }
 // token
-
 
 // async (req, res) => {
 //   console.log("Access to register a user");
@@ -208,7 +197,7 @@ module.exports = {
 //       );
 //       return res.status(200).json({
 //         code: 200,
-//         message: `Welcome back to PAWsitiveDaycare!, 
+//         message: `Welcome back to PAWsitiveDaycare!,
 //       ${user.firstName}`,
 //         user_id: user._id,
 //         firstName: user.firstName,
