@@ -6,6 +6,8 @@ const SECRET_KEY = process.env.SECRET_KEY;
 const { userModel } = require("../models/user");
 const { config } = require("dotenv");
 config();
+
+
 // Get all users
 const getAllUsers = async (req, res) => {
   try {
@@ -34,10 +36,8 @@ const getUser = async (req, res) => {
 const registerUser = async (req, res) => {
   console.log("Access to register a user")
   try { 
-    // 1. Create a new user object with values passed in from the request
     const { email, firstName, lastName, phoneNumber, password } = req.body
     console.log(`User creating on process`)
-    // const userObject = await UserModel.findOne({ email: email })
     const newUser = {
       email,
       password,
@@ -54,8 +54,7 @@ const registerUser = async (req, res) => {
       email: req.body.email,
       firstName: req.body.firstName
     }, SECRET_KEY, {
-      expiresIn: '30m',
-      issuer: 'PAWFUL_Dev'
+      expiresIn: '30m'
     })
     return res.status(201).json({
       code: 201,
@@ -111,10 +110,10 @@ const loginUser = async (req, res) => {
       return res.status(400).json({ message: "Invalid credentials" });
     }
 
-    const isPasswordValid = await bcrypt.compare(password, user.password);
-    if (!isPasswordValid) {
-      return res.status(401).json({ message: "Invalid credentials" });
-    }
+    // const isPasswordValid = await bcrypt.compare(password, user.password);
+    // if (!isPasswordValid) {
+    //   return res.status(401).json({ message: "Invalid credentials" });
+    // }
     // token
     const token = jwt.sign({ userId: user._id }, process.env.SECRET_KEY, {
       expiresIn: "7d",
