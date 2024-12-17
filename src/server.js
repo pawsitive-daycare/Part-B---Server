@@ -9,16 +9,16 @@ const allowedOrigins = ['https://zippy-tartufo-996534.netlify.app'];
 const corsOptions = {
   origin: function (origin, callback) {
     if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true); // Allow request
+      callback(null, true); 
     } else {
       callback(new Error('Not allowed by CORS'));
     }
   },
-  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed HTTP methods
-  credentials: true, // Allow credentials (cookies, headers)
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], 
+  credentials: true, 
 };
 
-app.use(cors(corsOptions)); // Apply CORS middleware
+app.use(cors(corsOptions)); 
 
 app.options('*', cors(corsOptions)); // Enable pre-flight request for all routes
 

@@ -32,29 +32,67 @@ const getUser = async (req, res) => {
 
 // Create or register new user
 const registerUser = async (req, res) => {
-  const { email, firstName, lastName, phoneNumber, password } = req.body;
-
+  console.log("Access to register a user")
   try {
-    // Checks for existing user
-    const userExists = await userModel.findOne({ email });
-    if (userExists) {
-      return res.status(400).json({ message: "User already exists" });
-    }
-    const hashedPassword = await bcrypt.hash(password, 12);
-
-    const newUser = new userModel({
+    // 1. Create a new user object with values passed in from the request
+    const { email, title, firstName, lastName, phoneNumber, password } = req.body
+    console.log(`User creating on process`)
+    // const userObject = await UserModel.findOne({ email: email })
+    const newUser = {
       email,
+      password,
+      title,
       firstName,
       lastName,
-      phoneNumber,
-      password: hashedPassword,
-    });
-    await newUser.save();
-    res.status(201).json(newUser);
-  } catch (error) {
-    res.status(400).json({ message: error.message });
+      phoneNumber
+    }
+    // 2. Insert the new user into the database
+    const insertedUser = await UserModel.create(newUser)
+    console.log(insertedUser)
+    // 3. Send the new user with 201 status
+    const token = jwt.sign({
+      type: 'JWT',
+      email: req.body.email,
+      firstName: req.body.firstName
+    }, SECRET_KEY, {
+      expiresIn: '30m',
+      issuer: 'PAWFUL_Dev'
+    })
+    return res.status(201).json({
+      code: 201,
+      message: `Thanks for registering! ${insertedUser.firstName}`,
+      user_id: insertedUser._id,
+      firstName: insertedUser.firstName,
+      token: token
+    })
+  } catch (err) {
+    res.status(500).send({ error: err.keyValue })
   }
-};
+}
+// async (req, res) => {
+//   const { email, firstName, lastName, phoneNumber, password } = req.body;
+
+//   try {
+//     // Checks for existing user
+//     const userExists = await userModel.findOne({ email });
+//     if (userExists) {
+//       return res.status(400).json({ message: "User already exists" });
+//     }
+//     const hashedPassword = await bcrypt.hash(password, 12);
+
+//     const newUser = new userModel({
+//       email,
+//       firstName,
+//       lastName,
+//       phoneNumber,
+//       password: hashedPassword,
+//     });
+//     await newUser.save();
+//     res.status(201).json(newUser);
+//   } catch (error) {
+//     res.status(400).json({ message: error.message });
+//   }
+// };
 
 // Login user
 const loginUser = async (req, res) => {

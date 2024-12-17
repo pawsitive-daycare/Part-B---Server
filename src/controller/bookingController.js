@@ -12,31 +12,21 @@ const getAllbookings = async (req, res) => {
 };
 // get a booking by user id
 const getBooking = async (req, res) => {
-  console.log("Access to find users bookings by user_id : " );
+  console.log("Access to find user's bookings by user_id:");
   try {
-    const _id = req.param.id
-    const booking = await bookingModel.find({user: _id});
-    if (!booking) {
-      return res.status(400).json({ message: "booking not found" });
+    const _id = req.params.id;  
+    const booking = await bookingModel.find({ user: _id });  
+
+    if (booking.length === 0) {  
+      return res.status(400).json({ message: "No bookings found" });
     }
-    res.status(200).json(booking);
+    res.status(200).json(booking);  
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
+// 
 
-// const getBooking = async (req, res) => {
-//   try {
-//     const booking = await bookingModel.findById(req.params.id);
-//     if (booking) {
-//       res.status(200).send(booking)
-//     } else {
-//       res.status(404).send({error: "booking not found"})
-//     }
-//   } catch (error) {
-//     res.status(500).send({ error: error.message })
-//   }
-// }
 // create a booking
 const makeBooking = async (req, res) => {
   try {
