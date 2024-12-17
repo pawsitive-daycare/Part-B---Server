@@ -7,7 +7,7 @@ const router = express.Router();
 
 
 // Get all users
-router.get("/", getAllUsers);
+router.get("/", auth, getAllUsers);
 
 // Get a user by ID
 

@@ -32,91 +32,32 @@ const getUser = async (req, res) => {
 };
 
 // Create or register new user
-const registerUser =  async (req, res) => {
-  console.log("Access to register a user");
-  try {
+const registerUser =   async (req, res) => {
     const { email, firstName, lastName, phoneNumber, password } = req.body;
-    console.log(`User creating on process`);
-    const newUser = {
-      email,
-      password,
-      firstName,
-      lastName,
-      phoneNumber,
-    };
-
-    const insertedUser = await userModel.create(newUser);
-    console.log(insertedUser);
-
-    const token = jwt.sign(
-      {
-        type: "JWT",
-        email: req.body.email,
-        firstName: req.body.firstName,
-      },
-      SECRET_KEY,
-      {
-        expiresIn: "30m",
-      }
-    );
-    return res.status(201).json({
-      code: 201,
-      message: `Thanks for registering! ${insertedUser.firstName}`,
-      user_id: insertedUser._id,
-      firstName: insertedUser.firstName,
-      token: token,
-    });
-  } catch (error) {
-    console.log(JSON.stringify(error));
-
-    res.status(500).send({ error: error.keyValue });
-  }
-};
-
-
-
-
-
-
-
-
-
+  
+     try {
+        //Checks for existing user
+       const userExists = await userModel.findOne({ email });
+       if (userExists) {
+         return res.status(400).json({ message: "User already exists" });
+       }
+       const hashedPassword = await bcrypt.hash(password, 12);
+  
+       const newUser = new userModel({
+         email,
+         firstName,
+         lastName,
+         phoneNumber,
+         password: hashedPassword,
+       });
+       await newUser.save();
+       res.status(201).json(newUser);
+     } catch (error) {
+       res.status(400).json({ message: error.message });
+     }
+   };
 
 // 
-
-// Login user
-const loginUser = async (req, res) => {
-  console.log("Access to login");
-  try {
-    const user = await userModel.findOne(req.body);
-    if (user.password === req.body.password) {
-      const token = jwt.sign(
-        {
-          type: "JWT",
-          email: req.body.email,
-          firstName: req.body.firstName,
-        },
-        SECRET_KEY,
-        {
-          expiresIn: "30m",
-        }
-      );
-      return res.status(200).json({
-        code: 200,
-        message: `Welcome back to PAWsitiveDaycare!, 
-      ${user.firstName}`,
-        user_id: user._id,
-        firstName: user.firstName,
-        token: token,
-      });
-    } else {
-      return res.status(404).send({ error: "LogIn failed. Please try again" });
-    }
-  } catch (error) {
-    console.log(JSON.stringify(error));
-    res.status(500).send({ error: err.message });
-  }
-};
 
 // Update user
 const updateUser = async (req, res) => {
@@ -153,6 +94,29 @@ const updateUser = async (req, res) => {
   }
 };
 
+
+// Login user
+const loginUser = async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    const user = await userModel.findOne({email});
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    // const isPasswordValid = await bcrypt.compare(password, user.password);
+    // if (!isPasswordValid) {
+    //   return res.status(401).json({ message: "Invalid credentials" });
+    // }
+
+    const token = jwt.sign( {userId: user._id}, process.env.SECRET_KEY, {expiresIn: "1h"});
+    res.status(200).json({ message: "Login successful", token });
+
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+
 // Delete user
 const deleteUser = async (req, res) => {
   try {
@@ -176,30 +140,7 @@ module.exports = {
   deleteUser,
 };
 
-// async (req, res) => {
-//   const { email, firstName, lastName, phoneNumber, password } = req.body;
 
-//   try {
-//     // Checks for existing user
-//     const userExists = await userModel.findOne({ email });
-//     if (userExists) {
-//       return res.status(400).json({ message: "User already exists" });
-//     }
-//     const hashedPassword = await bcrypt.hash(password, 12);
-
-//     const newUser = new userModel({
-//       email,
-//       firstName,
-//       lastName,
-//       phoneNumber,
-//       password: hashedPassword,
-//     });
-//     await newUser.save();
-//     res.status(201).json(newUser);
-//   } catch (error) {
-//     res.status(400).json({ message: error.message });
-//   }
-// };
 
 // const isPasswordValid = await bcrypt.compare(password, user.password);
 // if (!isPasswordValid) {
@@ -208,3 +149,76 @@ module.exports = {
 // token
 
 
+// async (req, res) => {
+//   console.log("Access to register a user");
+//   try {
+//     const { email, firstName, lastName, phoneNumber, password } = req.body;
+//     console.log(`User creating on process`);
+//     const newUser = {
+//       email,
+//       password,
+//       firstName,
+//       lastName,
+//       phoneNumber,
+//     };
+
+//     const insertedUser = await userModel.create(newUser);
+//     console.log(insertedUser);
+
+//     const token = jwt.sign(
+//       {
+//         type: "JWT",
+//         email: req.body.email,
+//         firstName: req.body.firstName,
+//       },
+//       SECRET_KEY,
+//       {
+//         expiresIn: "30m",
+//       }
+//     );
+//     return res.status(201).json({
+//       code: 201,
+//       message: `Thanks for registering! ${insertedUser.firstName}`,
+//       user_id: insertedUser._id,
+//       firstName: insertedUser.firstName,
+//       token: token,
+//     });
+//   } catch (error) {
+//     console.log(JSON.stringify(error));
+
+//     res.status(500).send({ error: error.keyValue });
+//   }
+// };
+
+// Login user
+// const loginUser = async (req, res) => {
+//   console.log("Access to login");
+//   try {
+//     const user = await userModel.findOne(req.body);
+//     if (user.password === req.body.password) {
+//       const token = jwt.sign(
+//         {
+//           email: req.body.email,
+//           firstName: req.body.firstName,
+//         },
+//         SECRET_KEY,
+//         {
+//           expiresIn: "30m",
+//         }
+//       );
+//       return res.status(200).json({
+//         code: 200,
+//         message: `Welcome back to PAWsitiveDaycare!, 
+//       ${user.firstName}`,
+//         user_id: user._id,
+//         firstName: user.firstName,
+//         token: token,
+//       });
+//     } else {
+//       return res.status(404).send({ error: "LogIn failed. Please try again" });
+//     }
+//   } catch (error) {
+//     console.log(JSON.stringify(error));
+//     res.status(500).send({ error: error.message });
+//   }
+// };
