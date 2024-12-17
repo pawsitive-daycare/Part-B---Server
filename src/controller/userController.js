@@ -35,13 +35,12 @@ const registerUser = async (req, res) => {
   console.log("Access to register a user")
   try { 
     // 1. Create a new user object with values passed in from the request
-    const { email, title, firstName, lastName, phoneNumber, password } = req.body
+    const { email, firstName, lastName, phoneNumber, password } = req.body
     console.log(`User creating on process`)
     // const userObject = await UserModel.findOne({ email: email })
     const newUser = {
       email,
       password,
-      title,
       firstName,
       lastName,
       phoneNumber
