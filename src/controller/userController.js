@@ -63,67 +63,44 @@ const registerUser = async (req, res) => {
       firstName: insertedUser.firstName,
       token: token
     })
-  } catch (err)
-   { console.log(JSON.stringify(err))
+  } catch (error)
+   { console.log(JSON.stringify(error))
 
-    res.status(500).send({ error: err.keyValue })
-
-
-
+    res.status(500).send({ error: error.keyValue })
 
   }
 }
-// async (req, res) => {
-//   const { email, firstName, lastName, phoneNumber, password } = req.body;
 
-//   try {
-//     // Checks for existing user
-//     const userExists = await userModel.findOne({ email });
-//     if (userExists) {
-//       return res.status(400).json({ message: "User already exists" });
-//     }
-//     const hashedPassword = await bcrypt.hash(password, 12);
-
-//     const newUser = new userModel({
-//       email,
-//       firstName,
-//       lastName,
-//       phoneNumber,
-//       password: hashedPassword,
-//     });
-//     await newUser.save();
-//     res.status(201).json(newUser);
-//   } catch (error) {
-//     res.status(400).json({ message: error.message });
-//   }
-// };
 
 // Login user
 const loginUser = async (req, res) => {
-  const { email, password } = req.body;
+  console.log("Access to login");
   try {
-    // This checks if the user exists
-    const user = await userModel.findOne({ email });
-    // if the provided email does not exist in the database
-    if (!user) {
-      // then return a status of 400 and a message
-      return res.status(400).json({ message: "Invalid credentials" });
+    const user = await userModel.findOne(req.body)
+    if (user.password === req.body.password) {
+      const token = jwt.sign({
+        type: 'JWT',
+        email: req.body.email,
+        firstName: req.body.firstName
+      }, SECRET_KEY, {
+        expiresIn: '30m'
+      })
+      return res.status(200).json({
+        code: 200,
+        message: `Welcome back to PAWsitiveDaycare!, 
+      ${user.firstName}`,
+        user_id: user._id,
+        firstName: user.firstName,
+        token: token
+      })
+    } else {
+      return res.status(404).send({ error: "LogIn failed. Please try again" })
     }
-
-    // const isPasswordValid = await bcrypt.compare(password, user.password);
-    // if (!isPasswordValid) {
-    //   return res.status(401).json({ message: "Invalid credentials" });
-    // }
-    // token
-    const token = jwt.sign({ userId: user._id }, process.env.SECRET_KEY, {
-      expiresIn: "7d",
-    });
-
-    res.status(200).json({ userId: user._id, token  });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
+  } catch (err) {
+    res.status(500).send({ error: err.message })
   }
 };
+
 
 // Update user
 const updateUser = async (req, res) => {
@@ -182,3 +159,36 @@ module.exports = {
   updateUser,
   deleteUser,
 };
+
+
+// async (req, res) => {
+//   const { email, firstName, lastName, phoneNumber, password } = req.body;
+
+//   try {
+//     // Checks for existing user
+//     const userExists = await userModel.findOne({ email });
+//     if (userExists) {
+//       return res.status(400).json({ message: "User already exists" });
+//     }
+//     const hashedPassword = await bcrypt.hash(password, 12);
+
+//     const newUser = new userModel({
+//       email,
+//       firstName,
+//       lastName,
+//       phoneNumber,
+//       password: hashedPassword,
+//     });
+//     await newUser.save();
+//     res.status(201).json(newUser);
+//   } catch (error) {
+//     res.status(400).json({ message: error.message });
+//   }
+// };
+
+
+    // const isPasswordValid = await bcrypt.compare(password, user.password);
+    // if (!isPasswordValid) {
+    //   return res.status(401).json({ message: "Invalid credentials" });
+    // }
+    // token 
