@@ -7,7 +7,6 @@ const { userModel } = require("../models/user");
 const { config } = require("dotenv");
 config();
 
-
 // Get all users
 const getAllUsers = async (req, res) => {
   try {
@@ -24,7 +23,7 @@ const getUser = async (req, res) => {
     const { id } = req.params; // Extract the ID from the request parameters
     const user = await userModel.findById(id);
     if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(404).json({ message: "User not found" });
     }
     res.status(200).json(user);
   } catch (error) {
@@ -33,74 +32,115 @@ const getUser = async (req, res) => {
 };
 
 // Create or register new user
-const registerUser = async (req, res) => {
-  console.log("Access to register a user")
-  try { 
-    const { email, firstName, lastName, phoneNumber, password } = req.body
-    console.log(`User creating on process`)
+const registerUser =  async (req, res) => {
+  console.log("Access to register a user");
+  try {
+    const { email, firstName, lastName, phoneNumber, password } = req.body;
+    console.log(`User creating on process`);
     const newUser = {
       email,
       password,
       firstName,
       lastName,
-      phoneNumber
-    }
-    
-    const insertedUser = await userModel.create(newUser)
-    console.log(insertedUser)
-   
-    const token = jwt.sign({
-      type: 'JWT',
-      email: req.body.email,
-      firstName: req.body.firstName
-    }, SECRET_KEY, {
-      expiresIn: '30m'
-    })
+      phoneNumber,
+    };
+
+    const insertedUser = await userModel.create(newUser);
+    console.log(insertedUser);
+
+    const token = jwt.sign(
+      {
+        type: "JWT",
+        email: req.body.email,
+        firstName: req.body.firstName,
+      },
+      SECRET_KEY,
+      {
+        expiresIn: "30m",
+      }
+    );
     return res.status(201).json({
       code: 201,
       message: `Thanks for registering! ${insertedUser.firstName}`,
       user_id: insertedUser._id,
       firstName: insertedUser.firstName,
-      token: token
-    })
-  } catch (error)
-   { console.log(JSON.stringify(error))
+      token: token,
+    });
+  } catch (error) {
+    console.log(JSON.stringify(error));
 
-    res.status(500).send({ error: error.keyValue })
-
+    res.status(500).send({ error: error.keyValue });
   }
-}
+};
 
+
+
+
+
+
+
+
+
+// async (req, res) => {
+//     const { email, firstName, lastName, phoneNumber, password } = req.body;
+  
+//     try {
+//       // Checks for existing user
+//       const userExists = await userModel.findOne({ email });
+//       if (userExists) {
+//         return res.status(400).json({ message: "User already exists" });
+//       }
+//       const hashedPassword = await bcrypt.hash(password, 12);
+  
+//       const newUser = new userModel({
+//         email,
+//         firstName,
+//         lastName,
+//         phoneNumber,
+//         password: hashedPassword,
+//       });
+//       await newUser.save();
+//       res.status(201).json(newUser);
+//     } catch (error) {
+//       res.status(400).json({ message: error.message });
+//     }
+//   };
+
+// 
 
 // Login user
 const loginUser = async (req, res) => {
   console.log("Access to login");
   try {
-    const user = await userModel.findOne(req.body)
+    const user = await userModel.findOne(req.body);
     if (user.password === req.body.password) {
-      const token = jwt.sign({
-        type: 'JWT',
-        email: req.body.email,
-        firstName: req.body.firstName
-      }, SECRET_KEY, {
-        expiresIn: '30m'
-      })
+      const token = jwt.sign(
+        {
+          type: "JWT",
+          email: req.body.email,
+          firstName: req.body.firstName,
+        },
+        SECRET_KEY,
+        {
+          expiresIn: "30m",
+        }
+      );
       return res.status(200).json({
         code: 200,
         message: `Welcome back to PAWsitiveDaycare!, 
       ${user.firstName}`,
         user_id: user._id,
         firstName: user.firstName,
-        token: token
-      })
+        token: token,
+      });
     } else {
-      return res.status(404).send({ error: "LogIn failed. Please try again" })
+      return res.status(404).send({ error: "LogIn failed. Please try again" });
     }
-  } catch (err) {
-    res.status(500).send({ error: err.message })
+  } catch (error) {
+    console.log(JSON.stringify(error));
+    res.status(500).send({ error: err.message });
   }
 };
-
 
 // Update user
 const updateUser = async (req, res) => {
@@ -160,7 +200,6 @@ module.exports = {
   deleteUser,
 };
 
-
 // async (req, res) => {
 //   const { email, firstName, lastName, phoneNumber, password } = req.body;
 
@@ -186,9 +225,10 @@ module.exports = {
 //   }
 // };
 
+// const isPasswordValid = await bcrypt.compare(password, user.password);
+// if (!isPasswordValid) {
+//   return res.status(401).json({ message: "Invalid credentials" });
+// }
+// token
 
-    // const isPasswordValid = await bcrypt.compare(password, user.password);
-    // if (!isPasswordValid) {
-    //   return res.status(401).json({ message: "Invalid credentials" });
-    // }
-    // token 
+
