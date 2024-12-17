@@ -33,7 +33,7 @@ const getUser = async (req, res) => {
 // Create or register new user
 const registerUser = async (req, res) => {
   console.log("Access to register a user")
-  try {
+  try { 
     // 1. Create a new user object with values passed in from the request
     const { email, title, firstName, lastName, phoneNumber, password } = req.body
     console.log(`User creating on process`)
@@ -46,10 +46,10 @@ const registerUser = async (req, res) => {
       lastName,
       phoneNumber
     }
-    // 2. Insert the new user into the database
-    const insertedUser = await UserModel.create(newUser)
+    
+    const insertedUser = await userModel.create(newUser)
     console.log(insertedUser)
-    // 3. Send the new user with 201 status
+   
     const token = jwt.sign({
       type: 'JWT',
       email: req.body.email,
@@ -65,8 +65,14 @@ const registerUser = async (req, res) => {
       firstName: insertedUser.firstName,
       token: token
     })
-  } catch (err) {
+  } catch (err)
+   { console.log(JSON.stringify(err))
+
     res.status(500).send({ error: err.keyValue })
+
+
+
+
   }
 }
 // async (req, res) => {
