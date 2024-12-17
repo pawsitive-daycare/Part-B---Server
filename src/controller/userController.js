@@ -81,30 +81,6 @@ const registerUser =  async (req, res) => {
 
 
 
-// async (req, res) => {
-//     const { email, firstName, lastName, phoneNumber, password } = req.body;
-  
-//     try {
-//       // Checks for existing user
-//       const userExists = await userModel.findOne({ email });
-//       if (userExists) {
-//         return res.status(400).json({ message: "User already exists" });
-//       }
-//       const hashedPassword = await bcrypt.hash(password, 12);
-  
-//       const newUser = new userModel({
-//         email,
-//         firstName,
-//         lastName,
-//         phoneNumber,
-//         password: hashedPassword,
-//       });
-//       await newUser.save();
-//       res.status(201).json(newUser);
-//     } catch (error) {
-//       res.status(400).json({ message: error.message });
-//     }
-//   };
 
 // 
 
