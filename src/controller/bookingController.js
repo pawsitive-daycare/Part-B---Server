@@ -12,7 +12,7 @@ const getAllbookings = async (req, res) => {
 };
 // get a booking by user id
 const getBooking = async (req, res) => {
-  console.log("Access to find user's bookings by user_id:");
+  console.log("Access to find user's bookings by user_id:", req.body_id);
   try {
     const _id = req.params.id;  
     const booking = await bookingModel.find({ user: _id });  
