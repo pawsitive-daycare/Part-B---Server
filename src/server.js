@@ -4,7 +4,7 @@ const cors = require("cors");
 const app = express();
 
 
-const allowedOrigins = ['https://zippy-tartufo-996534.netlify.app'];
+const allowedOrigins = ['https://zippy-tartufo-996534.netlify.app', 'http://localhost:3000'];
 
 const corsOptions = {
   origin: function (origin, callback) {
