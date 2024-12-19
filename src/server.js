@@ -2,20 +2,25 @@
 const express = require("express");
 const cors = require("cors");
 const app = express();
-
+const axios = require("axios");
 
 const allowedOrigins = ['https://zippy-tartufo-996534.netlify.app', 'http://localhost:3000'];
 
+// const corsOptions = {
+//   origin: function (origin, callback) {
+//     if (!origin || allowedOrigins.includes(origin)) {
+//       callback(null, true); 
+//     } else {
+//       callback(new Error('Not allowed by CORS'));
+//     }
+//   },
+//   methods: ['GET', 'POST', 'PUT', 'DELETE'], 
+//   credentials: true, 
+// };
 const corsOptions = {
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true); 
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  methods: ['GET', 'POST', 'PUT', 'DELETE'], 
-  credentials: true, 
+  origin: '*', // CHANGE TO FRONTEND DOMAIN
+  methods: 'GET,POST,PUT,DELETE,PATCH',
+  allowedHeaders: 'Content-Type,Authorization',
 };
 
 app.use(cors(corsOptions)); 

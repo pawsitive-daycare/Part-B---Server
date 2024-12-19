@@ -3,17 +3,18 @@
 const {getAllUsers, getUser, registerUser, loginUser, updateUser, deleteUser} = require("../controller/userController");
 
 const express = require ("express");
-const { verifyToken } = require("../middleware/auth");
+const { verifyToken, auth } = require("../middleware/auth");
+
 
 const router = express.Router();
 
 
 // Get all users
-router.get("/", verifyToken, getAllUsers);
+router.get("/", auth, getAllUsers);
 
 // Get a user by ID
 
-router.get("/:id", verifyToken ,getUser);
+router.get("/:id", auth ,getUser);
 
 // Register user
 router.post("/signup", registerUser);
@@ -24,10 +25,10 @@ router.post("/login", loginUser);
 
 // Update user
 
-router.put("/:id", verifyToken, updateUser);
+router.put("/:id", auth, updateUser);
 
 // Delete user
 
-router.delete("/:id", verifyToken ,deleteUser);
+router.delete("/:id", auth ,deleteUser);
 
 module.exports = router;
