@@ -33,7 +33,8 @@ const makeBooking = async (req, res) => {
   try {
     const { user, service, date, pet } = req.body;
 
-    const userObject = await userModel.findOne({_id: user});
+    const _id = req.params.id
+    const userObject = await userModel.findOne({user: _id});
 
     const newBooking = {
       user: userObject,
