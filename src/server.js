@@ -3,6 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 const axios = require("axios");
+const bodyParser = require('body-parser');
 
 const allowedOrigins = ['https://pawsitivedaycare-backend.onrender.com', 'http://localhost:3000', 'https://zippy-tartufo-996534.netlify.app'];
 
@@ -28,6 +29,13 @@ app.use(cors(corsOptions));
 app.options('*', cors(corsOptions)); // Enable pre-flight request for all routes
 
 app.use(express.json());
+
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
+
+// parse application/json
+app.use(bodyParser.json())
 
 app.get("/",(request, response) => {
     response.send("Home Route");
