@@ -10,7 +10,8 @@ const auth = async (req, res, next) => {
 
     try 
         {
-        const authHeader = req.header('Authorization');
+        const authHeader = req.header('authorization');
+        console.log(authHeader);
         if (!authHeader || !authHeader.startsWith('Bearer ')) {
             console.log('Authorization header missing or invalid');
             return res.status(401).json({error: 'Access denied, please login'});
@@ -27,6 +28,7 @@ const auth = async (req, res, next) => {
         }
 
         const user = await userModel.findById(decoded.userId);
+        console.log("Decoded user_id:", decoded.user_id);
 
         if (!user) {
             console.log('User not found');
