@@ -1,12 +1,13 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
-const SECRET_KEY = process.env.SECRET_KEY;
+
 
 const { userModel } = require("../models/user");
 const { config } = require("dotenv");
 config();
 
+const SECRET_KEY = process.env.SECRET_KEY;
 // Get all users
 const getAllUsers = async (req, res) => {
   try {
@@ -41,6 +42,7 @@ const registerUser = async (req, res) => {
     if (userExists) {
       return res.status(400).json({ message: "User already exists" });
     }
+
     const hashedPassword = await bcrypt.hash(password, 12);
 
     const newUser = new userModel({
@@ -65,8 +67,8 @@ const loginUser = async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-    const token = jwt.sign({ userId: user._id }, process.env.SECRET_KEY, {
-      expiresIn: "1h",
+    const token = jwt.sign({ userId: user._id }, SECRET_KEY, {
+      expiresIn: "7d",
     });
     res.status(200).json({ message: "Login successful", userId: user._id ,token });
   } catch (error) {

@@ -1,54 +1,3 @@
-
-
-// const jwt = require('jsonwebtoken');
-// const dotenv = require('dotenv');
-// dotenv.config();
-
-
-// const SECRET_KEY = process.env.SECRET_KEY;
-
-// const verifyToken = (req, res, next) => {
-//   try {
-//     const clientToken = req.headers.authorization;
-//     const decoded = jwt.verify(clientToken, SECRET_KEY);
-//     if (decoded) {
-//       res.decoded = decoded
-//       next()
-//     } else {
-//       res.status(401).json({ error: "Login failed. Please try again." });
-//     }
-//   } catch (err) {
-//     res.status(419).json({ error: 'Session is expired. Please Login again.' });
-//   }
-// };
-
-
-// module.exports = { verifyToken };
-
-
-
-
-// //const SECRET_KEY = process.env.SECRET_KEY;
-
-// // const auth = async (req, res, next) => {
-// //         const clientToken = req.headers['authorization'];
-// //         if (!clientToken) {
-// //             return res.status(401).json({error: 'login failed, please authenticate'});
-// //         }
-// //         try {
-// //         const decoded = jwt.verify(clientToken, process.env.SECRET_KEY);
-// //             req.user = user;
-// //             next();
-            
-// //         } catch (error) {
-// //         res.status(419).json({error: 'Session is expired. Please Login again.'});
-// //         }
-// //     };  
-
-
-
-
-
 const jwt = require('jsonwebtoken');
 const { userModel } = require('../models/user');
 const { config } = require('dotenv');
@@ -57,6 +6,8 @@ config();
 
 const auth = async (req, res, next) => {
     
+    SECRET_KEY = process.env.SECRET_KEY;
+
     try 
         {
         const authHeader = req.header('Authorization');
@@ -67,7 +18,7 @@ const auth = async (req, res, next) => {
         const token = authHeader.substring(7);
         console.log('Token:', token);
 
-        const decoded = jwt.verify(authHeader, process.env.SECRET_KEY);
+        const decoded = jwt.verify(token, SECRET_KEY);
         console.log('Decoded:', decoded);
 
         if (!decoded) {
