@@ -4,15 +4,15 @@ const { verifyToken } = require('../middleware/auth');
 const router = express.Router();
 
 //
-router.get("/", verifyToken, getAllbookings);
+router.get("/",  getAllbookings);
 
-router.get("/:id", verifyToken, getBooking);
+router.get("/:id",  getBooking);
 
-router.post("/", verifyToken,  makeBooking);
+router.post("/",   makeBooking);
 
 router.put("/:id", updateBooking);
 
-router.delete("/:id", verifyToken, deleteBooking);
+router.delete("/:id",  deleteBooking);
 
 
 
