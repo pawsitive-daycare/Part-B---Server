@@ -67,7 +67,7 @@ const auth = async (req, res, next) => {
         const token = authHeader.substring(7);
         console.log('Token:', token);
 
-        const decoded = jwt.verify(token, process.env.SECRET_KEY);
+        const decoded = jwt.verify(authHeader, process.env.SECRET_KEY);
         console.log('Decoded:', decoded);
 
         if (!decoded) {

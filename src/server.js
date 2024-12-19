@@ -4,28 +4,28 @@ const cors = require("cors");
 const app = express();
 const axios = require("axios");
 
-const allowedOrigins = ['https://pawsitivedaycare-backend.onrender.com', 'http://localhost:3000'];
+const allowedOrigins = ['https://pawsitivedaycare-backend.onrender.com', 'http://localhost:3000', 'https://zippy-tartufo-996534.netlify.app'];
 
-// const corsOptions = {
-//   origin: function (origin, callback) {
-//     if (!origin || allowedOrigins.includes(origin)) {
-//       callback(null, true); 
-//     } else {
-//       callback(new Error('Not allowed by CORS'));
-//     }
-//   },
-//   methods: ['GET', 'POST', 'PUT', 'DELETE'], 
-//   credentials: true, 
-// };
 const corsOptions = {
-  origin: '*', // CHANGE TO FRONTEND DOMAIN
-  methods: 'GET,POST,PUT,DELETE,PATCH',
-  // allowedHeaders: 'Content-Type,Authorization',
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true); 
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], 
+  credentials: true, 
 };
+// const corsOptions = {
+//   origin: '*', // CHANGE TO FRONTEND DOMAIN
+//   methods: 'GET,POST,PUT,DELETE,PATCH',
+//   // allowedHeaders: 'Content-Type,Authorization',
+// };
 
 app.use(cors(corsOptions)); 
 
-// app.options('*', cors(corsOptions)); // Enable pre-flight request for all routes
+app.options('*', cors(corsOptions)); // Enable pre-flight request for all routes
 
 app.use(express.json());
 
