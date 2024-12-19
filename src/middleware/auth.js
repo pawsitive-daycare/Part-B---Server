@@ -13,6 +13,7 @@ const auth = async (req, res, next) => {
         const authHeader = req.header('authorization');
         console.log(authHeader);
         if (!authHeader || !authHeader.startsWith('Bearer ')) {
+            console.log(authHeader);
             console.log('Authorization header missing or invalid');
             return res.status(401).json({error: 'Access denied, please login'});
         }
