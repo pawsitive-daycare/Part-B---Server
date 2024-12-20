@@ -32,7 +32,7 @@ const getBooking = async (req, res) => {
 const makeBooking = async (req, res) => {
   const { service, date, pet } = req.body;
   const user = req.user;
-  const newBooking =  new bookingModel();
+  
   console.log("Req user: ", req.user);
   // console.log("User id: ", req.user._id);
   if (!user) {
