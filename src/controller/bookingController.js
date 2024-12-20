@@ -30,18 +30,21 @@ const getBooking = async (req, res) => {
 
 // create a booking
 const makeBooking = async (req, res) => {
-  const { service, date, pet } = req.body;
-
+  const { user, service, date, pet } = req.body;
+  console.log("User id: ", req.user._id);
   if (!req.user) {
     console.log("No user associated with request");
     return res.status(400).json({ message: "No user associated with request" });
-  }
+    
+  }console.log("User id: ", req.user._id);
     try {
-  
-    const userId = req.user_id
+      console.log("User id: ", req.user._id);
+    const userId = req.user._id
     // await userModel.findById({user: _id});
 
+    console.log("user id:", userId)
     const newBooking =  new bookingModel({
+      
       user: userId,
       service: {
         name: service.name,
@@ -60,16 +63,15 @@ const makeBooking = async (req, res) => {
         age: pet.age,
       },
     });
-    await newBooking.save();
-    console.log("New booking:", newBooking);
-    res.status(201).json(newBooking);
-    
+   
+    console.log("saving booking's user id:", userId)
     const savedBooking = await bookingModel.create(newBooking);
 
     // const populatedBooking = await bookingModel.find(savedBooking).populate("user", "email");
+    
     const populatedBooking = await bookingModel.findById(savedBooking._id).populate("user");
     res.status(201).json(populatedBooking);
-    console.log(populatedBooking);
+
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Failed to create booking. Please try again later." });
