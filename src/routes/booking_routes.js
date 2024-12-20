@@ -12,10 +12,10 @@ router.get("/:id", getBooking);
 
 router.post("/", auth,  makeBooking);
 
-router.put("/:id", updateBooking);
+router.put("/:bookingId", updateBooking);
 
 router.delete("/:id", auth, deleteBooking);
 
-router.get("/:id", auth,  getBookingById);
+router.get("/:bookingId", auth,  getBookingById);
 
 module.exports = router;
