@@ -16,23 +16,27 @@ const bookingSchema = new mongoose.Schema({
         }
     },
     date: {
-        year: {
-            type: Number,
-            required: true
-        },
-        month: {
-            type: Number,
-            required: true
-        },
-        day: {
-            type: Number,
-            required: true
-        },
-        time: {
-            type: String,
-            required: true
-        }
+        type: Date,
+        required: true
     },
+    // {
+    //     year: {
+    //         type: Number,
+    //         required: true
+    //     },
+    //     month: {
+    //         type: Number,
+    //         required: true
+    //     },
+    //     day: {
+    //         type: Number,
+    //         required: true
+    //     },
+    //     time: {
+    //         type: String,
+    //         required: true
+    //     }
+    
     pet: {
         animal: {
             type: String,

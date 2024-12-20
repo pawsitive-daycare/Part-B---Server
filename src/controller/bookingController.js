@@ -31,41 +31,23 @@ const getBooking = async (req, res) => {
 // create a booking
 const makeBooking = async (req, res) => {
   const { user, service, date, pet } = req.body;
-  console.log("User id: ", req.user._id);
-  if (!req.user) {
+  // console.log("User id: ", req.user._id);
+  if (!user) {
     console.log("No user associated with request");
     return res.status(400).json({ message: "No user associated with request" });
     
-  }console.log("User id: ", req.user._id);
+  }
+  // console.log("User id: ", user._id);
     try {
-      console.log("User id: ", req.user._id);
-    const userId = req.user._id
+      // console.log("User id: ", user._id);
+    const userId = user._id
     // await userModel.findById({user: _id});
 
-    console.log("user id:", userId)
-    const newBooking =  new bookingModel({
-      
-      user: userId,
-      service: {
-        name: service.name,
-        price: service.price,
-      },
-      date: {
-        year: date.year,
-        month: date.month,
-        day: date.day,
-        time: date.time,
-      },
-      pet: {
-        animal: pet.animal,
-        name: pet.name,
-        breed: pet.breed,
-        age: pet.age,
-      },
-    });
+    // console.log("user id:", userId)
+    const newBooking =  new bookingModel();
    
     console.log("saving booking's user id:", userId)
-    const savedBooking = await bookingModel.create(newBooking);
+    const savedBooking = await newBooking.create(req.body);
 
     // const populatedBooking = await bookingModel.find(savedBooking).populate("user", "email");
     console.log("Booking created successfully");
