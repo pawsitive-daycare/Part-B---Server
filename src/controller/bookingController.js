@@ -28,13 +28,25 @@ const getBooking = async (req, res) => {
 };
 
 // get booking by it's id
-const getBookingById = async (req, res) => {
-  console.log("Access to find booking by booking_id:", req.params.id);
-  try {
-    const bookingId = req.params.id;
-    console.log("Booking id: ", bookingId);
-    const booking = await bookingModel.findById(bookingId);
+// const getBookingById = async (req, res) => {
+//   console.log("Access to find booking by booking_id:", req.params.id);
+//   try {
+//     const bookingId = req.params.id;
+//     console.log("Booking id: ", bookingId);
+//     const booking = await bookingModel.findById(bookingId);
 
+//     if (!booking) {
+//       return res.status(404).json({ message: "Booking not found" });
+//     }
+//     res.status(200).json(booking);
+//   } catch (error) {
+//     res.status(500).json({ message: error.message });
+//   }
+// };
+const getBookingById = async (req, res) => {
+  const { bookingId } = req.params;
+  try {
+    const booking = await bookingModel.findById(bookingId);
     if (!booking) {
       return res.status(404).json({ message: "Booking not found" });
     }
@@ -42,7 +54,7 @@ const getBookingById = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
-};
+}
 // 
 
 // create a booking
