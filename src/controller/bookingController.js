@@ -26,6 +26,23 @@ const getBooking = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+// get booking by it's id
+const getBookingById = async (req, res) => {
+  console.log("Access to find booking by booking_id:", req.params.id);
+  try {
+    const bookingId = req.params.id;
+    console.log("Booking id: ", bookingId);
+    const booking = await bookingModel.findById(bookingId);
+
+    if (!booking) {
+      return res.status(404).json({ message: "Booking not found" });
+    }
+    res.status(200).json(booking);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 // 
 
 // create a booking
@@ -40,13 +57,10 @@ const makeBooking = async (req, res) => {
     return res.status(400).json({ message: "No user associated with request" });
     
   }
-  // console.log("User id: ", user._id);
-    try {
-      // console.log("User id: ", user._id);
-    const userId = user._id
-    // await userModel.findById({user: _id});
 
-    // console.log("user id:", userId)
+    try {
+      
+    const userId = user._id
     
     const newEntry = {
       user: user,
@@ -73,10 +87,10 @@ const makeBooking = async (req, res) => {
 // update a booking
 
 const updateBooking = async (req, res) => {
-  const { user, service, date, pet} = req.body;
+  const { service, date, pet} = req.body;
   const updatedBooking = {user, service, date, pet}
   try {
-    const booking = await bookingModel.findByIdAndUpdate(req.params.id, updatedBooking)
+    const booking = await bookingModel.findByIdAndUpdate(req.params.id, updatedBooking, {new: true})
     if (booking) {
       res.send(booking)
     } else {
@@ -134,5 +148,6 @@ module.exports = {
   getBooking,
   makeBooking,
   updateBooking,
-  deleteBooking
+  deleteBooking,
+  getBookingById
 };
