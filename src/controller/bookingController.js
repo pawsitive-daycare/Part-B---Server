@@ -68,8 +68,9 @@ const makeBooking = async (req, res) => {
     const savedBooking = await bookingModel.create(newBooking);
 
     // const populatedBooking = await bookingModel.find(savedBooking).populate("user", "email");
-    
+    console.log("Booking created successfully");
     const populatedBooking = await bookingModel.findById(savedBooking._id).populate("user");
+    console.log("booking populated with user email:", populatedBooking);
     res.status(201).json(populatedBooking);
 
   } catch (error) {
