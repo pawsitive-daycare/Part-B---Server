@@ -1,6 +1,7 @@
 
 const mongoose = require('mongoose');
 const request = require('supertest');
+
 const { app } = require('./server');
 
 
@@ -20,8 +21,8 @@ describe ('Server', () => {
     });
 
     it("should register a new user", async () => {
-        const response = await request(app).post( '/users/register').send({
-            email: 'test@email.com',
+        const response = await request(app).post( '/users/signup').send({
+            email: 'test1@email.com',
             firstName: 'usertest',
             lastName: 'testuser',
             phoneNumber: '123456789',
@@ -32,3 +33,23 @@ describe ('Server', () => {
         expect(response.body.email).toBe('test@email.com');
     });
 })
+describe('Booking API', () => {
+    let token;
+  
+    beforeAll(async () => {
+      // Login and get token
+      const response = await request(app).post('/users/login').send({
+        email: 'test@email.com',
+        password: '123478'
+      });
+      token = response.body.token;
+    });
+  
+    it('should get booking by ID', async () => {
+      const response = await request(app)
+        .get('/mybookings/bookingId')
+        .set('Authorization', `Bearer ${token}`);
+      expect(response.status).toBe(200);
+      // Add more assertions as needed
+    });
+  });

@@ -103,14 +103,10 @@ const makeBooking = async (req, res) => {
   // console.log("User id: ", req.user._id);
   if (!user) {
     console.log("No user associated with request");
-    return res.status(400).json({ message: "No user associated with request" });
-    
+    return res.status(400).json({ message: "No user associated with request" }); 
   }
-
-    try {
-      
+    try {    
     const userId = user._id
-    
     const newEntry = {
       user: user,
       service: service,
@@ -120,7 +116,6 @@ const makeBooking = async (req, res) => {
     
     console.log("saving booking's user id:", userId);
     const savedBooking = await bookingModel.create(newEntry);
-
     // const populatedBooking = await bookingModel.find(savedBooking).populate("user", "email");
     console.log("Booking created successfully");
     const populatedBooking = await bookingModel.findById(savedBooking._id).populate("user");
@@ -152,18 +147,6 @@ const makeBooking = async (req, res) => {
 // }
 
 // delete a booking
-
-// const deleteBooking = async (req, res) => {
-//   try {
-//     const booking = await bookingModel.findByIdAndDelete(req.params.id)
-//     console.log("Booking deleted")
-//     res.status(200).send({ msg: "Booking is deleted successfully."})
-//     return ;
-//   }
-//   catch (error) {
-//     res.status(500).send({ error: error.message })
-//   }
-// };
 const deleteBooking = async (req, res) => {
   try {
     const userId = req.user._id; // Get the user ID from the authenticated user
