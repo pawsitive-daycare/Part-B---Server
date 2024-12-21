@@ -60,6 +60,7 @@ Additional technologies we used:
 - Jest: A JavaScript testing framework used for unit and integration testing to ensure code quality and reliability.
 - Nodemon: A development tool that automatically restarts the server when file changes are detected, streamlining the development process.
 
+
 ---
 
 ## Dataflow Diagram
@@ -175,7 +176,7 @@ The wireframes for our project have been included below and can also be accessed
 ![Contact Us Page](./docs/Wireframes/Contact%20Us%20Page%20Wireframe.PNG)
 ![About Us Page](./docs/Wireframes/About%20Us%20Page.PNG)
 ![Login/Sign Up Page](./docs/Wireframes/Login%20sign%20up%20page.PNG)
-![Dashboard](./docs/Wireframes/Dashboard%20-%20bookings%20system.PNG)
+![Dashboard](./docs/Wireframes/Dashboard.PNG)
 ![Dashboard - Booking System](./docs/Wireframes/Dashboard%20-%20bookings%20system.PNG)
 ![Dashboard - Pet Profile](./docs/Wireframes/Dashboard%20-%20pet%20profile.PNG)
 
@@ -183,11 +184,11 @@ The wireframes for our project have been included below and can also be accessed
 
 ### Task Delegation
 
-This is the first time the collaborators are working together for a team. Each member has been assigned tasks based on their individual strengths and areas for growth.
+This is the first time we are collaborating with someone else as part of a team. Each member has been assigned tasks based on their individual strengths and areas for growth.
 
-**Kevin Phoung** : Kevin is in charge of the frontend development, including overall design and visual aesthetics.
+**Kevin Phoung** : Kevin was responsible for the frontend development, including overall design and visual aesthetics.
 
-**John Niduelan** : John is responsible for backend server development and general task management.
+**John Niduelan** : John took charge of the overall frontend functionality, backend server development, and overseeing general task management.
 
 - [Trello Project Board](https://trello.com/invite/b/673454d54f89a5229f48eeaf/ATTI6efffa00ea68d2fa3d7c7d2a3b0c95f3AB78F6DB/fullstack-app)
 
@@ -199,11 +200,13 @@ This is the first time the collaborators are working together for a team. Each m
 ![trello6](./docs/trello/trello6.png)
 ![trello7](./docs/trello/trello7.png)
 
+
 ### Part B
 
 ![1](./docs/trello/1.png)
 ![2](./docs/trello/5.png)
 ![3](./docs/trello/8.png)
+![4](./docs/trello/9.png)
 
 
 
