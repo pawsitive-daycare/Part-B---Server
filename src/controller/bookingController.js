@@ -16,7 +16,7 @@ const getBooking = async (req, res) => {
   try {
     const _id = req.params.id; 
     // console.log("User id: ", _id) ;
-    const booking = await bookingModel.find({ id: _id });  
+    const booking = await bookingModel.find({ _id });  
 
     if (booking.length === 0) {  
       return res.status(400).json({ message: "No bookings found" });
