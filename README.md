@@ -260,5 +260,9 @@ This is the first time the collaborators are working together for a team. Each m
 
 ### Framework Test
 
-
-
+<div align="center">
+  <p>
+    Testing using Jest
+  </p>
+  <img src="./docs/testing/Jest/userControllerTest.png" />
+</div>
