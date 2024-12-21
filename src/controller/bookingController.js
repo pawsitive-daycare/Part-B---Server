@@ -15,9 +15,9 @@ const getBooking = async (req, res) => {
   // console.log("Access to find user's bookings by user_id:", req.params.id);
   try {
     const _id = req.params.id; 
-    // console.log("User id: ", _id) ;
-    const booking = await bookingModel.find({ _id });  
-
+    console.log("User id: ", _id) ;
+    const booking = await bookingModel.find( {user: _id} );  
+    console.log("booking id: ", booking) ;
     if (booking.length === 0) {  
       return res.status(400).json({ message: "No bookings found" });
     }
@@ -28,39 +28,37 @@ const getBooking = async (req, res) => {
 };
 
 // get booking by it's id
-// const getBookingById = async (req, res) => {
-//   console.log("Access to find booking by booking_id:", req.params.id);
-//   try {
-//     const bookingId = req.params.id;
-//     console.log("Booking id: ", bookingId);
-//     const booking = await bookingModel.findById(bookingId);
-
-//     if (!booking) {
-//       return res.status(404).json({ message: "Booking not found" });
-//     }
-//     res.status(200).json(booking);
-//   } catch (error) {
-//     res.status(500).json({ message: error.message });
-//   }
-// };
-
-const updateBooking = async (req, res) => {
-  // Check if req.user is defined, if not, return an error
-  if (!req.user) {
-    return res.status(400).json({ message: "No user associated with request" });
-  }
-
+const getBookingById = async (req, res) => {
+  console.log("Access to find booking by booking_id:", req.params.id);
   try {
-    // Find the booking by ID and ensure it's owned by the logged-in user
-    let booking = await bookingModel.findOne({
-      _id: req.params.id,
-      user: req.user._id,
-    });
+    const bookingId = req.params.id;
+    console.log("Booking id: ", bookingId);
+    const booking = await bookingModel.findById(bookingId);
 
     if (!booking) {
       return res.status(404).json({ message: "Booking not found" });
     }
+    res.status(200).json(booking);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 
+const updateBooking = async (req, res) => {
+  // Check if req.user is defined, if not, return an error
+  // if (!req.user) {
+  //   return res.status(400).json({ message: "No user associated with request" });
+  
+  try {
+    // Find the booking by ID and ensure it's owned by the logged-in user
+    console.log("Access to update booking by booking_id:", req.params.id);
+    let booking = await bookingModel.findOne({
+      _id: req.params.id,
+      // user: req.user._id,
+    });
+    if (!booking) {
+      return res.status(404).json({ message: "Booking not found" });
+    }
     // Update the booking with the new data
     booking = await bookingModel.findByIdAndUpdate(req.params.id, req.body, {
       new: true,         // Return the updated document
@@ -181,5 +179,5 @@ module.exports = {
   makeBooking,
   updateBooking,
   deleteBooking,
-  // getBookingById,
+  getBookingById,
 };
