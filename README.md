@@ -6,6 +6,13 @@
 
 ### [Live Site](https://zippy-tartufo-996534.netlify.app/)
 
+##### Login credentials for sample user:
+
+```
+email: example@email.com
+password: 123123123
+```
+
 ## Project Links:
 
 - [GitHub Repository - Documentation](https://github.com/pawsitive-daycare/Part-A-Documentation)
@@ -188,7 +195,7 @@ This is the first time we are collaborating with someone else as part of a team.
 
 **Kevin Phoung** : Kevin was responsible for the frontend development, including overall design and visual aesthetics.
 
-**John Niduelan** : John took charge of the overall frontend functionality, backend server development, and overseeing general task management.
+**John Niduelan** : John was responsible for the overall frontend functionality, backend server development, and overseeing general task management.
 
 - [Trello Project Board](https://trello.com/invite/b/673454d54f89a5229f48eeaf/ATTI6efffa00ea68d2fa3d7c7d2a3b0c95f3AB78F6DB/fullstack-app)
 
