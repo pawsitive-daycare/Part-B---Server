@@ -222,51 +222,85 @@ This is the first time we are collaborating with someone else as part of a team.
 ### Development testing
 
 #### User
-- Signup
+<div align="center">
+  <p>
+    Development User Testing
+  </p>
+  <img src="./docs/testing/Development/Development user testing .png" />
+</div>
 
- ![SignUp](./docs/testing/user/signUp.png)
 
-- Login
-
- ![login](./docs/testing/user/logIn.png)
-
-- Get user by id
-
-  ![getuser](./docs/testing/user/getUserById.png)
-
-- Get all users
-
- ![getAllUsers](./docs/testing/user/getAllUser.png)
-
-- Update User
-
- ![updateUser](./docs/testing/user/updateUser.png)
-
-- Delete User
-
- ![deleteUser](./docs/testing/user/deleteUser.png)
 
 #### Booking
 
- - Create booking
-
- ![deleteUser](./docs/testing/booking/createBooking.png)
-
- - Delete booking
-
- ![deleteUser](./docs/testing/booking/deleteBooking.png)
-
- - getAllBooking
-
- ![deleteUser](./docs/testing/booking/getAllBooking.png)
-
- - getUserBooking
-
- ![deleteUser](./docs/testing/booking/getBookingbyUserId.png)
-
+ <div align="center">
+  <p>
+    Development Booking Testing
+  </p>
+  <img src="./docs/testing/Development/Development testing booking.png" />
+</div>
 
 ### Production Test
-
+<div align="center">
+  <p>
+    User successfully login
+  </p>
+  <img src="./docs/testing/Production/user successfully login.png" />
+</div>
+<div align="center">
+  <p>
+    User created successfully
+  </p>
+  <img src="./docs/testing/Production/User account created.png" />
+</div>
+<div align="center">
+  <p>
+    User not found - Login
+  </p>
+  <img src="./docs/testing/Production/User not found.png" />
+</div>
+<div align="center">
+  <p>
+    Required fields needs to be filled - Signup
+  </p>
+  <img src="./docs/testing/Production/signUp Validation.png" />
+</div>
+<div align="center">
+  <p>
+    Invalid email or password - Login
+  </p>
+  <img src="./docs/testing/Production/Invalid email or password.png" />
+</div>
+<div align="center">
+  <p>
+    Required fields needs to be filled - Signup
+  </p>
+  <img src="./docs/testing/Production/signUp Validation.png" />
+</div>
+<div align="center">
+  <p>
+    Booking successfully created
+  </p>
+  <img src="./docs/testing/Production/Booking Successful.png" />
+</div>
+<div align="center">
+  <p>
+    Booking error if form not complete
+  </p>
+  <img src="./docs/testing/Production/Booking form not completed.png" />
+</div>
+<div align="center">
+  <p>
+    Booking successfully deleted
+  </p>
+  <img src="./docs/testing/Production/booking removed.png" />
+</div>
+<div align="center">
+  <p>
+    Booking successfully updated
+  </p>
+  <img src="./docs/testing/Production/update Successful.png" />
+</div>
 
 ### Framework Test
 
