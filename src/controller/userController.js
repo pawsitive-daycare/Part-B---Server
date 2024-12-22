@@ -63,10 +63,17 @@ const registerUser = async (req, res) => {
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
   try {
+    // Find user by email
     const user = await userModel.findOne({ email });
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
+    // Compare provided password with the hashed password in the database
+    const isPasswordCorrect = await bcrypt.compare(password, user.password);
+    if (!isPasswordCorrect) {
+      return res.status(401).json({ message: "Incorrect password" });
+    }
+    // Generate token if login is successful
     const token = jwt.sign({ userId: user._id }, SECRET_KEY, {
       expiresIn: "7d",
     });
